@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private FatSecretSearch mFatSecretSearch;
     private FatSecretGet mFatSecretGet;
     EditText Et1;
+    private String lol;
     String brand;
     Button button;
     private ArrayList<Item> mItem;
