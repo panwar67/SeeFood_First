@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FitFatSecret.iml" filepath="$PROJECT_DIR$/FitFatSecret.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Intern.iml" filepath="$PROJECT_DIR$/Intern.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SeeFood_Main.iml" filepath="$PROJECT_DIR$/SeeFood_Main.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

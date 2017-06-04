@@ -1,13 +1,16 @@
 package com.example.nikhil.fitfatsecret;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nikhil.fitfatsecret.FatSecretImplementation.FatSecretSearch;
@@ -25,11 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mProgressMore, mProgressSearch;
     private FatSecretSearch mFatSecretSearch;
     private FatSecretGet mFatSecretGet;
-    EditText Et1;
-    private String lol;
+    TextView fats, carbs, cals, protien;
     String brand;
-    Button button;
     private ArrayList<Item> mItem;
+    String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +39,17 @@ public class MainActivity extends AppCompatActivity {
         mFatSecretGet = new FatSecretGet();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Et1 = (EditText) findViewById(R.id.text);
-        button = (Button) findViewById(R.id.button);
+        tag = getIntent().getStringExtra("food_name");
+        //button = (Button) findViewById(R.id.button);
         mItem = new ArrayList<>();
 
+        searchFood(tag,1);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Here lol", "lol");
-                searchFood(Et1.getText().toString(), 1);
-//                getFood(1);
-//                getFood();
-            }
-        });
+        fats = (TextView)findViewById(R.id.fat);
+        cals = (TextView)findViewById(R.id.calorie);
+        protien = (TextView)findViewById(R.id.protien);
+        carbs = (TextView)findViewById(R.id.carbs);
+
     }
 
 
@@ -113,9 +112,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getFood(final long id) {
-        new AsyncTask<String, String, String>() {
+        new AsyncTask<String, JSONObject, JSONObject>() {
             @Override
-            protected String doInBackground(String... arg0) {
+            protected JSONObject doInBackground(String... arg0) {
+
                 JSONObject foodGet = mFatSecretGet.getFood(id);
                 try {
                     if (foodGet != null) {
@@ -137,21 +137,74 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("carbohydrate", carbohydrate);
                         Log.e("protein", protein);
                         Log.e("fat", fat);
+                        Display_Details(foodGet);
+                        //cals.setText("Carbohydrates : "+carbohydrate);
                     }
 
                 } catch (JSONException exception) {
-                    return "Error";
+                    return foodGet;
                 }
-                return "";
+                return foodGet;
             }
 
             @Override
-            protected void onPostExecute(String result) {
+            protected void onPostExecute(JSONObject result) {
                 super.onPostExecute(result);
+                try {
+                    Display_Details(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 if (result.equals("Error"))
                     Toast.makeText(getApplicationContext(), "No Items Containing Your Search", Toast.LENGTH_SHORT).show();
 
             }
         }.execute();
+    }
+
+
+    public void Display_Details(final JSONObject data) throws JSONException {
+
+
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                String food_name = null;
+                try {
+                    food_name = data.getString("food_name");
+                    JSONObject servings = data.getJSONObject("servings");
+                    JSONObject serving = servings.getJSONObject("serving");
+                    String calories = serving.getString("calories");
+                    String carbohydrate = serving.getString("carbohydrate");
+                    String protein = serving.getString("protein");
+                    String fat = serving.getString("fat");
+                    String serving_description = serving.getString("serving_description");
+                    Log.e("serving_description", serving_description);
+                    /**
+                     * Displays results in the LogCat
+                     */
+                    Log.e("food_name", food_name);
+                    Log.e("calories", calories);
+                    Log.e("carbohydrate", carbohydrate);
+                    Log.e("protein", protein);
+                    Log.e("fat", fat);
+                    fats.setText("Fats : "+fat);
+                    cals.setText("Calories : "+calories);
+                    protien.setText("Protien : "+protein);
+                    carbs.setText("Carbohydrates : "+carbohydrate);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+        });
+
+
     }
 }

@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.example.nikhil.fitfatsecret.MainActivity"
     >
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/text"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="246dp"
-        android:layout_below="@+id/text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="206dp" />
-</RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/calorie"/>
+
+            <TextView
+
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/carbs"/>
+
+
+            <TextView
+
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/protien"/>
+
+
+            <TextView
+
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/fat"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+</LinearLayout>
